@@ -1,0 +1,158 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r Librerie, include=FALSE}
+library(tidyverse)
+library(ggrepel)
+library(ggtext)
+library(readr)
+library(readxl)
+library(magrittr)
+library(RColorBrewer)
+```
+
+
+```{r Quote di mercato} 
+quote <- read_csv("dataset/quote_di_mercato_paesi.csv")
+quote %<>% 
+  mutate(stati = factor(stati, levels = c("Altri", "Spagna", "Germania", "Svizzera", "Francia", "Cina", "UK", "USA")))
+
+  quote %>%
+  ggplot(aes(x="", y=valori, fill = stati)) +
+  ggtitle("Quote di mercato su scala globale 2020") +
+    labs(caption = "Fonte: The Art Market 2021, Art Basel and UBS") +
+    xlab("") +
+    ylab("") +
+    scale_fill_brewer(palette="Set3") +
+    geom_bar(stat = "identity", width = 1, color = "white", show.legend = F) +
+    coord_polar("y") +
+    theme_void()
+```
+```{r}
+ggsave("figure/quote_di_mercato_paesi.png", width = 7, height = 6)
+```
+
+```{r Età collezionisti}
+collezionisti <- read_csv("dataset/eta_collezionisti.csv")
+
+collezionisti %<>% 
+  mutate(generazione = reorder(generazione, valori)) 
+
+collezionisti %>%
+  ggplot(aes(x="", y=valori, fill = generazione )) +
+  ggtitle("Età dei collezionisti intervistati da Art Basel", subtitle = "Campione di 2569 High Net Worth Individuals") +
+  labs(caption = "Fonte: The Art Market 2021, Art Basel and UBS") +
+  xlab("") +
+  ylab("") +
+  scale_fill_brewer(palette="Set3") +
+  geom_bar(stat = "identity", width = 1, color = "white", show.legend = F) +
+  coord_polar("y") +
+  theme_void()
+```
+```{r}
+ggsave("figure/eta_collezionisti.png", width = 7, height = 6)
+```
+
+```{r Cambiamenti nelle vendite}
+vendite <- read_csv("dataset/cambiamenti_nelle_vendite.csv")
+
+vendite %<>% mutate(anni = as.Date(paste(anni, "01", "01", sep = "-")))
+
+vendite %>%
+  ggplot(aes(anni, change)) +
+  ggtitle("Cambiamento percentuale delle vendite nel mercato dell'arte") +
+  labs(caption = "Fonte: The Art Market 2021, Art Basel and UBS") +
+  xlab("Anni") +
+  ylab("Variazione annuale [%]") +
+  geom_line() +
+  geom_label(aes(label = paste0(vendite$change * 100, "%"), color = change < 0), show.legend = F) +
+  scale_color_brewer(palette="Set2") +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme_bw()
+```
+```{r}
+ggsave("figure/cambiamenti_nelle_vendite.png", width = 7, height = 4)
+```
+
+```{r Cambiamento percentuale vendite online}
+mercato_online <- read_csv("dataset/valore_vendite_online.csv")
+
+percent_value <- function(var) {
+  r <- vector()
+  for( k in 1:length(var) ) {
+    r[k] <- round((var[k+1] - var[k]) / var[k], digits = 2)
+  }
+  data.table::shift(r, -1)
+}
+
+mercato_online %<>% 
+  mutate(
+    anno = as.Date(paste(anno, "01", "01", sep = "-")),
+    crescita = percent_value(dollari)
+    )
+  
+
+mercato_online %>%
+  ggplot(aes(anno, crescita)) +
+  ggtitle("Cambiamento percentuale delle vendite nel mercato dell'arte online") +
+  labs(caption = "Fonte: Online Art Trade report 2020") +
+  xlab("Anni") +
+  ylab("Variazione annuale [%]") +
+  geom_line() +
+  geom_label(aes(label = paste0(mercato_online$crescita * 100, "%"), color = crescita < 0), show.legend = F) +
+  scale_color_brewer(palette="Set2") +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year") +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  theme_bw()
+```
+```{r}
+ggsave("figure/crescita_percentuale_mercato_online.png", width = 7, height = 4)
+```
+
+```{r Cambiamento assoluto vendite online}
+mercato_online %>%
+  ggplot(aes(anno, dollari)) +
+  ggtitle("Vendite online di opere d'arte e beni da collezione", subtitle = "Valore delle vendite in milioni di dollari") +
+  labs(caption = "Fonte: Arts Economics (2021)") +
+  xlab("Anni") +
+  ylab("Milioni [$]") +
+  geom_line() +
+  geom_point() +
+  geom_text(aes(label = paste0("$",mercato_online$dollari / 1000000)), vjust = 0, nudge_y = 200000, nudge_x = -50) +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year") +
+  scale_y_continuous(labels = function(v) paste0("$", v / 1000000)) +
+  theme_bw()
+```
+```{r}
+ggsave("figure/crescita_assoluta_mercato_online.png", width = 7, height = 4)
+```
+
+```{r}
+eth <- read_csv("dataset/ethereum.csv")
+eth %<>%
+  select(Date, Close) %>%
+  mutate(Date = as.Date(Date, format = "%b-%d-%Y"))
+
+values <- eth %>%
+  filter(Close == max(Close) | Close == min(Close))
+
+ eth %>%
+  ggplot(aes(Date, Close)) +
+  geom_line() +
+  geom_point(data = values, aes(color = Close == max(Close)), show.legend = F) +
+  geom_label(data = values, aes(label = paste0("$", round(Close, 1), "\n", format(Date, "%b '%y")), color = Close == max(Close)), nudge_x = c(-200, 0), nudge_y = c(-200, 400), show.legend = F) +
+  scale_color_brewer(palette="Set2", direction = -1) +
+  ggtitle("Andamento del prezzo della criptovaluta ETH (2015-2021)") +
+  labs(caption = "Fonte: CoinCodex @ https://coincodex.com/crypto/ethereum/historical-data/ (dati al 03/06/21)") +
+  xlab("Data") +
+  ylab("Close value [USD]") +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  theme_bw()
+```
+```{r}
+ggsave("figure/ethereum.png", width = 7, height = 4)
+```
+
