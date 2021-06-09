@@ -217,7 +217,7 @@ crypto_art %>%
   #geom_point(color = "#88A2BC") +
   geom_label(aes(label = paste0("$", round(totale / 1000000, 1), "M"), color = totale > 0), show.legend = F) +
   scale_color_manual(values = c("#8DD3C7")) +
-  ggtitle("Dettaglio volume di vendita del mercato della crypto art", "Periodo Gennaio 21 - Maggio 21") +
+  ggtitle("Dettaglio volume di vendita del mercato della crypto art", "Periodo di riferimento: Gennaio '21 - Maggio '21") +
   xlab("Anni") +
   ylab("Dollari [USD]") +
   scale_y_continuous(labels = function(v) ifelse(v == "0", paste0("$", v / 1000000), paste0("$", v / 1000000,"M"))) +
@@ -320,9 +320,9 @@ freq_d <- sales %>%
   mutate(date = as.Date(paste(year, month, "01", sep = "-"))) %>%
   ggplot(aes(date, count)) +
   geom_col(fill = "#88A2BC") +
-  geom_label(data = ~.x %>% filter(date %in% c(as.Date("2020-04-01"), as.Date("2021-01-01"))), aes(label = count), vjust = 0) +
+  geom_text(data = ~.x %>% filter(date %in% c(as.Date("2020-04-01"), as.Date("2021-01-01"))), aes(label = count), color = "white", fontface = "bold", vjust = 1, nudge_y = -50) +
   scale_x_date(date_breaks = "2 month", date_labels = "%b %Y") +
-  ggtitle("Dettaglio andamento delle vendite di crypto art su SuperRare", "Frequenza mensile delle vendite") +
+  ggtitle("Dettaglio andamento delle vendite (Marzo '20 - Marzo '21)", "Frequenza mensile delle vendite") +
   xlab("") +
   ylab("Unità vendute") +
   theme_bw()
@@ -336,13 +336,12 @@ tot_d <- sales %>%
   ggplot(aes(date, total)) +
   geom_line(color = "#88A2BC") +
   geom_point(color = "#88A2BC") +
-  geom_label(data = ~.x %>% filter(date %in% c(as.Date("2020-04-01"), as.Date("2021-01-01"))), aes(label = ifelse(total < 1e6, paste0("$", round(total / 1e3, 1), "k"), paste0("$", round(total / 1e6, 1), "M"))), vjust = 0, hjust = 0) +
+  geom_label(data = ~.x %>% filter(date %in% c(as.Date("2020-04-01"), as.Date("2021-01-01"))), aes(label = ifelse(total < 1e6, paste0("$", round(total / 1e3, 1), "k"), paste0("$", round(total / 1e6, 1), "M"))), nudge_y = c(0, 1e6), color = "#8DD3C7") +
   scale_y_continuous(breaks = scales::pretty_breaks(), labels = function(v) ifelse(v == 0, paste0("$", 0), paste0("$", v / 1000000, "M"))) +
   scale_x_date(breaks = c(as.Date("2020-03-01"), as.Date("2020-05-01"), as.Date("2020-07-01"), as.Date("2020-09-01"), as.Date("2020-11-01"), as.Date("2021-01-01"), as.Date("2021-03-01")), date_labels = "%b %Y") +
   ggtitle(NULL, "Volume di vendita") +
   xlab("Anni") +
   ylab("Dollari [USD]") +
-  labs(caption = "Fonte: M. Franceschet @ https://www.kaggle.com/franceschet/superrare") +
   theme_bw()
 
 freq_d / tot_d
