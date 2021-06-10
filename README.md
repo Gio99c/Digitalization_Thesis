@@ -41,7 +41,7 @@ quote %<>%
     theme_void()
 ```
 
-![](Graphs_files/figure-markdown_github/Quote%20di%20mercato-1.png)
+![](figure/quote_di_mercato_paesi.png)
 
 ## Età collezionisti
 
