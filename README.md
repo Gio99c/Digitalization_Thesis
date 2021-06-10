@@ -66,7 +66,7 @@ collezionisti %>%
   theme_void()
 ```
 
-![](Graphs_files/figure-markdown_github/Età%20collezionisti-1.png)
+![](figure/eta_collezionisti.png)
 
 ## Cambiamenti nelle vendite
 
@@ -92,7 +92,7 @@ vendite %>%
   theme_bw()
 ```
 
-![](Graphs_files/figure-markdown_github/Cambiamenti%20nelle%20vendite-1.png)
+![](figure/cambiamenti_nelle_vendite.png)
 
 ## Cambiamento percentuale vendite online
 
@@ -134,7 +134,7 @@ mercato_online %>%
   theme_bw()
 ```
 
-![](Graphs_files/figure-markdown_github/Cambiamento%20percentuale%20vendite%20online-1.png)
+![](figure/crescita_percentuale_mercato_online.png)
 
 ## Cambiamento assoluto vendite online
 
@@ -156,7 +156,7 @@ mercato_online %>%
   theme_bw()
 ```
 
-![](Graphs_files/figure-markdown_github/Cambiamento%20assoluto%20vendite%20online-1.png)
+![](figure/crescita_assoluta_mercato_online.png)
 
 ## Cambiamento del prezzo di ETH
 
@@ -192,7 +192,7 @@ values <- eth %>%
   theme_bw()
 ```
 
-![](Graphs_files/figure-markdown_github/Cambiamento%20del%20prezzo%20di%20ETH-1.png)
+![](figure/ethereum.png)
 
 ## Andamento del mercato della crypto arte
 
@@ -242,7 +242,7 @@ barre_log <- crypto_art %>%
 linee / (barre + barre_log)
 ```
 
-![](Graphs_files/figure-markdown_github/Andamento%20del%20mercato%20della%20crypto%20arte-1.png)
+![](figure/mercato_cryptoarte.png)
 
 ### Dettaglio andamento del mercato della crypto arte
 
@@ -264,7 +264,7 @@ crypto_art %>%
   theme_bw()
 ```
 
-![](Graphs_files/figure-markdown_github/Dettaglio%20andamento%20del%20mercato%20della%20crypto%20arte-1.png)
+![](figure/dettaglio_mercato_cryptoarte.png)
 
 ## Distribuzione delle vendite per marketplace
 
@@ -301,7 +301,7 @@ box <- crypto_art %>%
 jitter / violin / box
 ```
 
-![](Graphs_files/figure-markdown_github/Distribuzione%20delle%20vendite%20per%20marketplace-1.png)
+![](figure/distribuzione_cryptoarte.png)
 
 ## SuperRare Andamento vendite
 
@@ -349,7 +349,7 @@ tot <- sales %>%
 freq / tot
 ```
 
-![](Graphs_files/figure-markdown_github/SuperRare%20Andamento%20vendite-1.png)
+![](figure/vendite_superrare.png)
 
 ### Dettaglio SuperRare andamento vendite
 
@@ -389,7 +389,7 @@ tot_d <- sales %>%
 freq_d / tot_d
 ```
 
-![](Graphs_files/figure-markdown_github/Dettaglio%20SuperRare%20andamento%20vendite-1.png)
+![](figure/dettaglio_vendite_superrare.png)
 
 ## SuperRare Primario vs Secondario
 
@@ -416,4 +416,4 @@ p_vs_s %>%
   theme_bw()
 ```
 
-![](Graphs_files/figure-markdown_github/SuperRare%20Primario%20vs%20Secondario-1.png)
+![](figure/primario_vs_secondario.png)
