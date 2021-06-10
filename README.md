@@ -3,7 +3,7 @@
 Questo file contiene le visualizzazioni utilizzate all’interno della
 tesi e il codice utilizzato per generarle. Tutti i file contenenti i
 dati utili alla creazione dei grafici sono presenti all’interno della
-directory *figure*, tutte le fonti sono citate all’interno dei grafici.
+directory *dataset*, tutte le fonti sono citate all’interno dei grafici.
 
 ### Librerie e variabili utilizzate per la creazione e personalizzazione dei grafici
 
