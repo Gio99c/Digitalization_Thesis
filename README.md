@@ -227,8 +227,9 @@ barre <- crypto_art %>%
   theme_bw() +
   theme(plot.title = element_text(size = 7.5))
 
+# Non utilizzato perché le barre sovrapposte non funzionano bene con la scala logaritmica
 barre_log <- crypto_art %>%
-  ggplot(aes(data, log10(valore), group = company, fill = company)) +
+  ggplot(aes(data, valore, group = company, fill = company)) +
   geom_col() +
   scale_fill_manual("Marketplace", values = Set3[Set3 != "#FFFFB3"]) +
   scale_y_log10(breaks = scales::trans_breaks('log10', function(x) 10^x), labels = function(v) scales::math_format()((log10(v) / 5))) +
@@ -239,7 +240,19 @@ barre_log <- crypto_art %>%
   theme_bw() +
   theme(plot.title = element_text(size = 7.5))
 
-linee / (barre + barre_log)
+linee_log <- crypto_art %>%
+  ggplot(aes(data, valore, group = company, color = company)) +
+  geom_line() +
+  scale_color_manual("Marketplace", values = Set3[Set3 != "#FFFFB3"]) +
+  scale_y_log10(breaks = scales::trans_breaks('log10', function(x) 10^x), labels = function(v) scales::math_format()((log10(v)))) +
+  ylab("") +
+  xlab("") +
+  labs(caption = "Fonte: CryptoArt @ https://cryptoart.io/data") +
+  ggtitle("Dettaglio quote di mercato con scala logaritmica") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 7.5))
+
+linee / (barre + linee_log)
 ```
 
 ![](figure/mercato_cryptoarte.png)
