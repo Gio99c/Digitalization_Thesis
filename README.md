@@ -223,6 +223,7 @@ barre <- crypto_art %>%
   scale_y_continuous(labels = function(v) ifelse(v == "0", paste0("$", v / 1000000), paste0("$", v / 1000000,"M"))) +
   ylab("") +
   xlab("") +
+  labs(tag = "A") +
   ggtitle("Dettaglio andamento con suddivisione in quote di mercato") +
   theme_bw() +
   theme(plot.title = element_text(size = 7.5))
@@ -247,7 +248,7 @@ linee_log <- crypto_art %>%
   scale_y_log10(breaks = scales::trans_breaks('log10', function(x) 10^x), labels = function(v) scales::math_format()((log10(v)))) +
   ylab("") +
   xlab("") +
-  labs(caption = "Fonte: CryptoArt @ https://cryptoart.io/data") +
+  labs(caption = "Fonte: CryptoArt @ https://cryptoart.io/data", tag = "B") +
   ggtitle("Dettaglio quote di mercato con scala logaritmica") +
   theme_bw() +
   theme(plot.title = element_text(size = 7.5))
@@ -272,6 +273,7 @@ crypto_art %>%
   ggtitle("Dettaglio volume di vendita del mercato della crypto art", "Periodo di riferimento: Gennaio '21 - Maggio '21") +
   xlab("Anni") +
   ylab("Dollari [USD]") +
+  labs(tag = "C") + 
   scale_y_continuous(labels = function(v) ifelse(v == "0", paste0("$", v / 1000000), paste0("$", v / 1000000,"M"))) +
   scale_x_date(date_labels = "%b '%y", expand = expansion(mult = c(0.1, 0.1))) +
   theme_bw()
