@@ -292,6 +292,7 @@ jitter <- crypto_art %>%
   ggtitle("Distribuzione delle vendite per marketplace", "Vendite mensili nel periodo Aprile 2018 - Maggio 2021") +
   xlab("") +
   ylab("Dollari [USD]") +
+  labs(tag = "A") + 
   theme_bw()
 
 violin <- crypto_art %>%
@@ -301,6 +302,7 @@ violin <- crypto_art %>%
   scale_y_log10(breaks = scales::trans_breaks('log10', function(x) 10^x), labels = scales::trans_format('log10', scales::math_format(10^.x))) +
   xlab("") +
   ylab("Dollari [USD]") +
+  labs(tag = "B") + 
   theme_bw()
 
 box <- crypto_art %>%
@@ -311,6 +313,7 @@ box <- crypto_art %>%
   xlab("Marketplace") +
   ylab("Dollari [USD]") +
   labs(caption = "Fonte: CryptoArt @ https://cryptoart.io/data") +
+  labs(tag = "C") + 
   theme_bw()
 
 jitter / violin / box
