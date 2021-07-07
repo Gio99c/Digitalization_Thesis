@@ -45,6 +45,8 @@ quote %<>%
 
 ## Età collezionisti
 
+*Le etichette sono state inserite nella visualizzazione in post-produzione con Photoshop*
+
 ``` r
 collezionisti <- read_csv("dataset/eta_collezionisti.csv", col_types = cols(
   generazione = col_character(),
@@ -69,6 +71,8 @@ collezionisti %>%
 ![](figure/eta_collezionisti.png)
 
 ## Cambiamenti nelle vendite
+
+*Le etichette sono state inserite nella visualizzazione in post-produzione con Photoshop*
 
 ``` r
 vendite <- read_csv("dataset/cambiamenti_nelle_vendite.csv", col_types = cols(
