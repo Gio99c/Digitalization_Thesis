@@ -21,6 +21,8 @@ Set3 <- brewer.pal(brewer.pal.info["Set3", "maxcolors"], "Set3")
 
 ## Quote di mercato
 
+*Le etichette sono state inserite nella visualizzazione in post-produzione con Photoshop*
+
 ``` r
 quote <- read_csv("dataset/quote_di_mercato_paesi.csv", col_types = cols(
   stati = col_character(),
@@ -71,8 +73,6 @@ collezionisti %>%
 ![](figure/eta_collezionisti.png)
 
 ## Cambiamenti nelle vendite
-
-*Le etichette sono state inserite nella visualizzazione in post-produzione con Photoshop*
 
 ``` r
 vendite <- read_csv("dataset/cambiamenti_nelle_vendite.csv", col_types = cols(
